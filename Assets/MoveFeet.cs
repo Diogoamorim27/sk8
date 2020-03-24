@@ -5,8 +5,8 @@ public class MoveFeet : MonoBehaviour
 {
     PlayerControls controls;
 
-    public Transform leftFoot;
-    public Transform rightFoot;
+    public Rigidbody leftFoot;
+    public Rigidbody rightFoot;
 
     public float movementRange = 1f;
     public float moveSpeed = 0.1f;
@@ -48,8 +48,8 @@ public class MoveFeet : MonoBehaviour
 
     void FixedUpdate()
     {
-        leftFoot.position = Vector3.Lerp(leftFoot.position, originalLeftPos + leftInput3d * movementRange, moveSpeed);
-        rightFoot.position = Vector3.Lerp(rightFoot.position, originalRightPos + rightInput3d * movementRange, moveSpeed);
+        leftFoot.MovePosition(Vector3.Lerp(leftFoot.position, originalLeftPos + leftInput3d * movementRange, moveSpeed));
+        rightFoot.MovePosition(Vector3.Lerp(rightFoot.position, originalRightPos + rightInput3d * movementRange, moveSpeed));
     }
 
     void OnEnable()
