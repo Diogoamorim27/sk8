@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+//obs levar em conta a gravidade
+
 public class MoveFeet : MonoBehaviour
 {
     PlayerControls controls;
 
     public Rigidbody leftFoot;
     public Rigidbody rightFoot;
+
+    //public Transform Skateboard;
 
     public float movementRange = 1f;
     public float moveSpeed = 0.1f;
@@ -19,6 +23,9 @@ public class MoveFeet : MonoBehaviour
 
     Vector3 leftInput3d = new Vector3();
     Vector3 rightInput3d = new Vector3();
+
+    //float LeftOffset;
+    //float RightOffset;
 
     void Awake()
     {
@@ -35,6 +42,7 @@ public class MoveFeet : MonoBehaviour
     {
         originalLeftPos = leftFoot.position;
         originalRightPos = rightFoot.position;
+        
     }
     
     void Update()

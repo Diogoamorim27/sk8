@@ -33,6 +33,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ResetSkatePos"",
+                    ""type"": ""Button"",
+                    ""id"": ""f19c8f07-9ebf-45fb-9181-17f8ce10e125"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -57,6 +65,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""RightStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc1568fb-258a-44fc-802f-ef2ebfd0f3a0"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetSkatePos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -67,6 +86,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_LeftStick = m_Gameplay.FindAction("LeftStick", throwIfNotFound: true);
         m_Gameplay_RightStick = m_Gameplay.FindAction("RightStick", throwIfNotFound: true);
+        m_Gameplay_ResetSkatePos = m_Gameplay.FindAction("ResetSkatePos", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +138,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_LeftStick;
     private readonly InputAction m_Gameplay_RightStick;
+    private readonly InputAction m_Gameplay_ResetSkatePos;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftStick => m_Wrapper.m_Gameplay_LeftStick;
         public InputAction @RightStick => m_Wrapper.m_Gameplay_RightStick;
+        public InputAction @ResetSkatePos => m_Wrapper.m_Gameplay_ResetSkatePos;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -139,6 +161,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RightStick.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightStick;
                 @RightStick.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightStick;
                 @RightStick.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightStick;
+                @ResetSkatePos.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnResetSkatePos;
+                @ResetSkatePos.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnResetSkatePos;
+                @ResetSkatePos.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnResetSkatePos;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -149,6 +174,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RightStick.started += instance.OnRightStick;
                 @RightStick.performed += instance.OnRightStick;
                 @RightStick.canceled += instance.OnRightStick;
+                @ResetSkatePos.started += instance.OnResetSkatePos;
+                @ResetSkatePos.performed += instance.OnResetSkatePos;
+                @ResetSkatePos.canceled += instance.OnResetSkatePos;
             }
         }
     }
@@ -157,5 +185,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnLeftStick(InputAction.CallbackContext context);
         void OnRightStick(InputAction.CallbackContext context);
+        void OnResetSkatePos(InputAction.CallbackContext context);
     }
 }
