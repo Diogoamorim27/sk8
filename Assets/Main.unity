@@ -644,6 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86b61ad7ea1e9b4c80bb3804dc90767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectToFollow: {fileID: 2812031102180407524}
   leftFoot: {fileID: 1503106812}
   rightFoot: {fileID: 188400123}
   movementRange: 1
