@@ -10,6 +10,9 @@ public class MoveFeet : MonoBehaviour
     [SerializeField] private Transform objectToFollow;
     private float leftFootXOffset = 0.1f;
     private float rightFootXOffset = 0.1f;
+    private float leftFootYOffset = 0.1f;
+    private float rightFootYOffset = 0.1f;
+
     public Rigidbody leftFoot;
     public Rigidbody rightFoot;
 
@@ -47,15 +50,17 @@ public class MoveFeet : MonoBehaviour
         originalRightPos = rightFoot.position;
         leftFootXOffset = originalLeftPos.x - objectToFollow.position.x;
         rightFootXOffset = originalRightPos.x - objectToFollow.position.x;
+        leftFootYOffset = originalLeftPos.y - objectToFollow.position.y;
+        rightFootYOffset = originalRightPos.y - objectToFollow.position.y;
         
         ResetOriginalPos();
     }
 
     void Update()
     {
-        leftInput3d.x = leftInput.x;
+        leftInput3d.x = leftInput.x/2;
         leftInput3d.y = leftInput.y;
-        rightInput3d.x = rightInput.x;
+        rightInput3d.x = rightInput.x/2;
         rightInput3d.y = rightInput.y;
 
         ResetOriginalPos();
