@@ -7,6 +7,9 @@ public class MoveFeet : MonoBehaviour
 {
     PlayerControls controls;
 
+    [SerializeField] private Transform objectToFollow;
+    private float leftFootXOffset = 0.1f;
+    private float rightFootXOffset = 0.1f;
     public Rigidbody leftFoot;
     public Rigidbody rightFoot;
 
@@ -42,9 +45,12 @@ public class MoveFeet : MonoBehaviour
     {
         originalLeftPos = leftFoot.position;
         originalRightPos = rightFoot.position;
+        leftFootXOffset = originalLeftPos.x - objectToFollow.position.x;
+        rightFootXOffset = originalRightPos.x - objectToFollow.position.x;
         
+        ResetOriginalPos();
     }
-    
+
     void Update()
     {
         leftInput3d.x = leftInput.x;
@@ -52,12 +58,30 @@ public class MoveFeet : MonoBehaviour
         rightInput3d.x = rightInput.x;
         rightInput3d.y = rightInput.y;
 
+        ResetOriginalPos();
     }
 
     void FixedUpdate()
     {
         leftFoot.MovePosition(Vector3.Lerp(leftFoot.position, originalLeftPos + leftInput3d * movementRange, moveSpeed));
         rightFoot.MovePosition(Vector3.Lerp(rightFoot.position, originalRightPos + rightInput3d * movementRange, moveSpeed));
+    }
+
+    void ResetOriginalPos()
+    {
+        originalLeftPos = GetFollowedObjectPos(originalLeftPos, leftFootXOffset);
+        originalRightPos = GetFollowedObjectPos(originalRightPos, rightFootXOffset);
+    }
+
+    /// <summary>
+    /// Method that returns the new origin position
+    /// </summary>
+    /// <param name="origin">Original position</param>
+    /// <returns>Position that contains the destiny x</returns>
+    Vector3 GetFollowedObjectPos(Vector3 origin, float offset)
+    {
+        Vector3 destiny = new Vector3(objectToFollow.position.x + offset, origin.y, origin.z);
+        return destiny;
     }
 
     void OnEnable()
