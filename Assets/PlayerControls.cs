@@ -57,6 +57,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""X"",
+                    ""type"": ""Button"",
+                    ""id"": ""ccb79ca8-069c-42d8-8aa9-ca427d1b9f69"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -114,6 +122,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""RightShoulder"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b85a9c21-aabe-41f8-8b75-128604c25ca4"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -127,6 +146,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_ResetSkatePos = m_Gameplay.FindAction("ResetSkatePos", throwIfNotFound: true);
         m_Gameplay_LeftShoulder = m_Gameplay.FindAction("LeftShoulder", throwIfNotFound: true);
         m_Gameplay_RightShoulder = m_Gameplay.FindAction("RightShoulder", throwIfNotFound: true);
+        m_Gameplay_X = m_Gameplay.FindAction("X", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -181,6 +201,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_ResetSkatePos;
     private readonly InputAction m_Gameplay_LeftShoulder;
     private readonly InputAction m_Gameplay_RightShoulder;
+    private readonly InputAction m_Gameplay_X;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -190,6 +211,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @ResetSkatePos => m_Wrapper.m_Gameplay_ResetSkatePos;
         public InputAction @LeftShoulder => m_Wrapper.m_Gameplay_LeftShoulder;
         public InputAction @RightShoulder => m_Wrapper.m_Gameplay_RightShoulder;
+        public InputAction @X => m_Wrapper.m_Gameplay_X;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +236,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RightShoulder.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightShoulder;
                 @RightShoulder.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightShoulder;
                 @RightShoulder.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightShoulder;
+                @X.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnX;
+                @X.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnX;
+                @X.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnX;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -233,6 +258,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RightShoulder.started += instance.OnRightShoulder;
                 @RightShoulder.performed += instance.OnRightShoulder;
                 @RightShoulder.canceled += instance.OnRightShoulder;
+                @X.started += instance.OnX;
+                @X.performed += instance.OnX;
+                @X.canceled += instance.OnX;
             }
         }
     }
@@ -244,5 +272,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnResetSkatePos(InputAction.CallbackContext context);
         void OnLeftShoulder(InputAction.CallbackContext context);
         void OnRightShoulder(InputAction.CallbackContext context);
+        void OnX(InputAction.CallbackContext context);
     }
 }

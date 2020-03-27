@@ -16,7 +16,7 @@ public class MoveFeet : MonoBehaviour
     public Rigidbody leftFoot;
     public Rigidbody rightFoot;
 
-    //public Transform Skateboard;
+    public Rigidbody Skateboard;
 
     public float movementRange = 1f;
     public float moveSpeed = 0.1f;
@@ -42,6 +42,8 @@ public class MoveFeet : MonoBehaviour
 
         controls.Gameplay.LeftStick.performed += ctx => leftInput = ctx.ReadValue<Vector2>();
         controls.Gameplay.LeftStick.canceled += ctx => leftInput = Vector2.zero;
+
+        controls.Gameplay.X.performed += ctx => Row();
     }
     
     void Start()
@@ -103,5 +105,11 @@ public class MoveFeet : MonoBehaviour
     void OnDisable()
     {
         controls.Gameplay.Disable();
+    }
+
+    void Row()
+    {
+        Skateboard.AddForce(new Vector3(10000,0,0));
+        Debug.Log("Row");
     }
 }
