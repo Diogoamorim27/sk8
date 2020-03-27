@@ -41,6 +41,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftShoulder"",
+                    ""type"": ""Button"",
+                    ""id"": ""6a6a83b1-fc0b-4df2-b797-68f6ddcb7523"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RightShoulder"",
+                    ""type"": ""Button"",
+                    ""id"": ""111804d5-6c16-445f-bd69-10591a69d145"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -76,6 +92,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""ResetSkatePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c77cee9-f914-4dec-9af5-6a85393ba4ab"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftShoulder"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22ea060d-58c7-44df-9aa5-a73b16457365"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightShoulder"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -87,6 +125,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_LeftStick = m_Gameplay.FindAction("LeftStick", throwIfNotFound: true);
         m_Gameplay_RightStick = m_Gameplay.FindAction("RightStick", throwIfNotFound: true);
         m_Gameplay_ResetSkatePos = m_Gameplay.FindAction("ResetSkatePos", throwIfNotFound: true);
+        m_Gameplay_LeftShoulder = m_Gameplay.FindAction("LeftShoulder", throwIfNotFound: true);
+        m_Gameplay_RightShoulder = m_Gameplay.FindAction("RightShoulder", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -139,6 +179,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_LeftStick;
     private readonly InputAction m_Gameplay_RightStick;
     private readonly InputAction m_Gameplay_ResetSkatePos;
+    private readonly InputAction m_Gameplay_LeftShoulder;
+    private readonly InputAction m_Gameplay_RightShoulder;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -146,6 +188,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @LeftStick => m_Wrapper.m_Gameplay_LeftStick;
         public InputAction @RightStick => m_Wrapper.m_Gameplay_RightStick;
         public InputAction @ResetSkatePos => m_Wrapper.m_Gameplay_ResetSkatePos;
+        public InputAction @LeftShoulder => m_Wrapper.m_Gameplay_LeftShoulder;
+        public InputAction @RightShoulder => m_Wrapper.m_Gameplay_RightShoulder;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -164,6 +208,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @ResetSkatePos.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnResetSkatePos;
                 @ResetSkatePos.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnResetSkatePos;
                 @ResetSkatePos.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnResetSkatePos;
+                @LeftShoulder.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftShoulder;
+                @LeftShoulder.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftShoulder;
+                @LeftShoulder.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLeftShoulder;
+                @RightShoulder.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightShoulder;
+                @RightShoulder.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightShoulder;
+                @RightShoulder.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRightShoulder;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -177,6 +227,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @ResetSkatePos.started += instance.OnResetSkatePos;
                 @ResetSkatePos.performed += instance.OnResetSkatePos;
                 @ResetSkatePos.canceled += instance.OnResetSkatePos;
+                @LeftShoulder.started += instance.OnLeftShoulder;
+                @LeftShoulder.performed += instance.OnLeftShoulder;
+                @LeftShoulder.canceled += instance.OnLeftShoulder;
+                @RightShoulder.started += instance.OnRightShoulder;
+                @RightShoulder.performed += instance.OnRightShoulder;
+                @RightShoulder.canceled += instance.OnRightShoulder;
             }
         }
     }
@@ -186,5 +242,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnLeftStick(InputAction.CallbackContext context);
         void OnRightStick(InputAction.CallbackContext context);
         void OnResetSkatePos(InputAction.CallbackContext context);
+        void OnLeftShoulder(InputAction.CallbackContext context);
+        void OnRightShoulder(InputAction.CallbackContext context);
     }
 }
