@@ -60,7 +60,7 @@ public class MoveFeet : MonoBehaviour
     {
         leftInput3d.x = leftInput.x/2;
         leftInput3d.y = leftInput.y;
-        rightInput3d.x = rightInput.x/2;
+        rightInput3d.x = rightInput.x/(1.5f);
         rightInput3d.y = rightInput.y;
 
         ResetOriginalPos();
@@ -74,8 +74,8 @@ public class MoveFeet : MonoBehaviour
 
     void ResetOriginalPos()
     {
-        originalLeftPos = GetFollowedObjectPos(originalLeftPos, leftFootXOffset);
-        originalRightPos = GetFollowedObjectPos(originalRightPos, rightFootXOffset);
+        originalLeftPos = GetXObjectPos(originalLeftPos, leftFootXOffset);
+        originalRightPos = GetFollowedObjectPos(originalRightPos, rightFootXOffset, rightFootYOffset);
     }
 
     /// <summary>
@@ -83,9 +83,15 @@ public class MoveFeet : MonoBehaviour
     /// </summary>
     /// <param name="origin">Original position</param>
     /// <returns>Position that contains the destiny x</returns>
-    Vector3 GetFollowedObjectPos(Vector3 origin, float offset)
+    Vector3 GetFollowedObjectPos(Vector3 origin, float offsetX, float offsetY)
     {
-        Vector3 destiny = new Vector3(objectToFollow.position.x + offset, origin.y, origin.z);
+        Vector3 destiny = new Vector3(objectToFollow.position.x + offsetX, objectToFollow.position.y + offsetY, origin.z);
+        return destiny;
+    }
+
+    Vector3 GetXObjectPos(Vector3 origin, float offsetX)
+    {
+        Vector3 destiny = new Vector3(objectToFollow.position.x + offsetX, origin.y, origin.z);
         return destiny;
     }
 
